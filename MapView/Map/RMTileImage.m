@@ -189,12 +189,13 @@
 		[customActions setObject:[NSNull null] forKey:kCAOnOrderOut];
         [customActions setObject:[NSNull null] forKey:kCAOnOrderIn];
 
+        /* The animations seems to force crashes when running while tile is removed (and it's not nice) - Daniel Gard
 		CATransition *fadein = [[CATransition alloc] init];
 		fadein.duration = 0.3;
 		fadein.type = kCATransitionReveal;
 		[customActions setObject:fadein forKey:@"contents"];
 		[fadein release];
-
+        */
 		
 		layer.actions=customActions;
 		
