@@ -54,19 +54,19 @@
     self = [super init];
     if (self) {
         _connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate startImmediately:NO];
-        self.port = [NSPort port];
+        _port = [[NSPort port] retain];
     }
     return self;
 }
 
-- (void)dealloc {
-    
-    [_connection cancel];
+- (void)dealloc
+{
+    [self.connection cancel];
     [_connection release];
-    
-    [[NSRunLoop mainRunLoop] removePort:self.port forMode:NSDefaultRunLoopMode];
+
+    [[NSRunLoop mainRunLoop] removePort:_port forMode:NSDefaultRunLoopMode];
     [_port release];
-    
+
     [super dealloc];
 }
 
@@ -88,16 +88,16 @@
     
     // If the operation is not canceled, begin executing the task.
     [self willChangeValueForKey:@"isExecuting"];
-    
-    //the magical run loop trick will force NSURLConnection to call the delegate methods on main thread 
-    [[NSRunLoop mainRunLoop] addPort:self.port forMode:NSDefaultRunLoopMode];
-    [_connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-    [self.connection start];
-    [[NSRunLoop mainRunLoop] run];
 
     self.executing = YES;
-    
+
     [self didChangeValueForKey:@"isExecuting"];
+
+    //the magical run loop trick will force NSURLConnection to call the delegate methods on main thread 
+    [[NSRunLoop mainRunLoop] addPort:self.port forMode:NSDefaultRunLoopMode];
+    [self.connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.connection start];
+    [[NSRunLoop mainRunLoop] run];
 }
 
 - (BOOL)isConcurrent
@@ -118,7 +118,7 @@
 - (void)cancel
 {
     [super cancel];
-    
+
     if ([self isExecuting]) {
         [self.connection cancel];
         [self completeOperation];

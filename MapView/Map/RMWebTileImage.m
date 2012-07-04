@@ -122,7 +122,7 @@ static NSOperationQueue *_queue = nil;
 
 - (void)startLoading:(NSTimer *)timer
 {
-	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
+	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15.0];
 
     connectionOp = [[RMURLConnectionOperation alloc] initWithRequest:request delegate:self];
     
