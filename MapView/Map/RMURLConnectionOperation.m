@@ -89,13 +89,13 @@
     // If the operation is not canceled, begin executing the task.
     [self willChangeValueForKey:@"isExecuting"];
     
-    self.executing = YES;
-    
     //the magical run loop trick will force NSURLConnection to call the delegate methods on main thread 
     [[NSRunLoop mainRunLoop] addPort:self.port forMode:NSDefaultRunLoopMode];
     [_connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
     [self.connection start];
     [[NSRunLoop mainRunLoop] run];
+
+    self.executing = YES;
     
     [self didChangeValueForKey:@"isExecuting"];
 }
