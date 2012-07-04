@@ -196,6 +196,7 @@
 		[customActions setObject:fadein forKey:@"contents"];
 		[fadein release];
         */
+        [customActions setObject:[NSNull null] forKey:@"contents"];
 		
 		layer.actions=customActions;
 		
