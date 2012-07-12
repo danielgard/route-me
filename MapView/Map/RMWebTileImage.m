@@ -111,13 +111,8 @@ static NSOperationQueue *_queue = nil;
 			return;
 		}
 		retries--;		
-
-		[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startLoading:) userInfo:nil repeats:NO];		
 	}
-	else 
-	{
-		[self startLoading:nil];
-	}
+    [self startLoading:nil];
 }
 
 - (void)startLoading:(NSTimer *)timer
