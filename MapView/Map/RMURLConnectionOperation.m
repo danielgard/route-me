@@ -61,7 +61,6 @@
 
 - (void)dealloc
 {
-    [self.connection cancel];
     [_connection release];
 
     [[NSRunLoop mainRunLoop] removePort:_port forMode:NSDefaultRunLoopMode];
